@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    // Buscar el usuario por email
     $stmt = $conexion->prepare("SELECT * FROM usuarios WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -23,9 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario = $result->fetch_assoc();
 
     if ($usuario && password_verify($password, $usuario['password'])) {
-        $_SESSION['usuario'] = $usuario;
-        header('Location: index.php');
-        exit();
+        // Verificar el rol del usuario
+        if ($usuario['rol'] === 'superadministrador' || $usuario['rol'] === 'coordinador' || $usuario['rol'] === 'instructor') {
+            // Iniciar sesión
+            $_SESSION['usuario'] = $usuario;
+            header('Location: index.php');
+            exit();
+        } else {
+            $error = "No tienes permisos para acceder al sistema.";
+        }
     } else {
         $error = "Email o contraseña incorrectos";
     }

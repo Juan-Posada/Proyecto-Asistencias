@@ -26,6 +26,15 @@ $usuario = $_SESSION['usuario'];
             <li><a href="views/superadministrador/registrar_coordinador.php">Registrar Coordinador</a></li>
             <li><a href="views/superadministrador/listar_coordinadores.php">Listar Coordinadores</a></li>
         </ul>
+    <?php elseif ($usuario['rol'] === 'coordinador'): ?>
+        <h2>Acciones de Coordinador</h2>
+        <ul>
+            <li><a href="views/coordinador/programas.php">Gestionar Programas</a></li>
+            <li><a href="views/coordinador/ambientes.php">Gestionar Ambientes</a></li>
+            <li><a href="views/coordinador/fichas.php">Gestionar Fichas</a></li>
+            <li><a href="views/coordinador/aprendices.php">Gestionar Aprendices</a></li>
+            <li><a href="views/coordinador/instructores.php">Gestionar Instructores</a></li>
+        </ul>
     <?php endif; ?>
 </body>
 </html>

@@ -24,7 +24,7 @@ $controller = new SuperAdministradorController($superAdministrador);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Hashear la contraseña
     $regional = $_POST['regional'];
     $centro_academico = $_POST['centro_academico'];
 
