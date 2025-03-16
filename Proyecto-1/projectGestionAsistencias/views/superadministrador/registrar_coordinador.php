@@ -1,13 +1,24 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['rol'] !== 'superadministrador') {
-    header('Location: login.php');
+    header('Location: ../../login.php');
     exit();
 }
 
-require_once '../controllers/SuperAdministradorController.php';
+// Incluir el controlador SuperAdministradorController
+require_once '../../controllers/SuperAdministradorController.php';
 
-$superAdministrador = new SuperAdministrador($_SESSION['usuario']['id'], $_SESSION['usuario']['nombre'], $_SESSION['usuario']['email'], $_SESSION['usuario']['password'], $_SESSION['usuario']['regional'], $_SESSION['usuario']['centro_academico']);
+// Obtener el super administrador actual
+$superAdministrador = new SuperAdministrador(
+    $_SESSION['usuario']['id'],
+    $_SESSION['usuario']['nombre'],
+    $_SESSION['usuario']['email'],
+    $_SESSION['usuario']['password'],
+    $_SESSION['usuario']['regional'],
+    $_SESSION['usuario']['centro_academico']
+);
+
+// Crear el controlador
 $controller = new SuperAdministradorController($superAdministrador);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -31,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Registrar Coordinador</title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 <body>
     <h1>Registrar Coordinador</h1>

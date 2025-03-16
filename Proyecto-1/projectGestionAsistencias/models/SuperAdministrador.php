@@ -1,6 +1,7 @@
 <?php
 
-require_once 'models/Usuario.php';
+require_once __DIR__ . '/../config/Conexion.php';
+require_once __DIR__ . '/Usuario.php';
 
 class SuperAdministrador extends Usuario {
     public function __construct($id, $nombre, $email, $password, $regional, $centro_academico) {

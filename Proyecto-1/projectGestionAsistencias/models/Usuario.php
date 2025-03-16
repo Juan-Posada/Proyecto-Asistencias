@@ -1,6 +1,7 @@
 <?php
 
-require_once 'config/Conexion.php';
+// Usar __DIR__ para obtener la ruta absoluta del directorio actual
+require_once __DIR__ . '/../config/Conexion.php';
 
 class Usuario {
     protected $id;

@@ -17,7 +17,7 @@ $usuario = $_SESSION['usuario'];
 </head>
 <body>
     <h1>Bienvenido, <?php echo $usuario['nombre']; ?></h1>
-    <p>Rol: <?php echo $usuario['rol']; ?></p>
+    <p>Su Rol es: <?php echo $usuario['rol']; ?></p>
     <a href="logout.php">Cerrar Sesión</a>
 
     <?php if ($usuario['rol'] === 'superadministrador'): ?>

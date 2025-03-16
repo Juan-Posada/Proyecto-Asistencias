@@ -1,6 +1,7 @@
 <?php
 
-require_once 'models/SuperAdministrador.php';
+// Usar __DIR__ para obtener la ruta absoluta del directorio actual
+require_once __DIR__ . '/../models/SuperAdministrador.php';
 
 class SuperAdministradorController {
     private $superAdministrador;
