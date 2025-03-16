@@ -15,26 +15,30 @@ class BaseModel
         try {
             $options = [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]; 
-            $dsn = DRIVER.':host='.HOST.';dbname='.DATABASE;
+            ];
+            $dsn = DRIVER . ':host=' . HOST . ';dbname=' . DATABASE;
             $this->dbConnection = new PDO($dsn, USERNAME_DB, PASSWORD_DB, $options);
         } catch (PDOException $ex) {
             echo "Error>" . $ex->getMessage();
         }
     } // Cierra el constructor
 
-    public function getAll(): array{
+    public function getAll(): array
+    {
         try {
+            echo "Intentando obtener datos de la tabla: $this->table<br>";
+
             $sql = "SELECT * FROM $this->table";
             $statement = $this->dbConnection->query($sql);
-            //Obtenemos resultado de la base de dataos en un array asociativo
+
+            // Verificar si hay registros
             $result = $statement->fetchAll(PDO::FETCH_OBJ);
-            //Devolvemos el array con los datos
+            echo "Se encontraron " . count($result) . " registros<br>";
+
             return $result;
         } catch (PDOException $ex) {
             echo "Error en consulta>{$ex->getMessage()}";
             return [];
-        } 
-
+        }
     }
 }

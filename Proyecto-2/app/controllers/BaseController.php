@@ -4,15 +4,17 @@ namespace App\Controllers;
 
 session_start();
 
-class BaseController {
+class BaseController
+{
     protected string $layout = "main_layout";
 
-    public function __construct(){
+    public function __construct()
+    {
         // Validar el timepo de inactividad de un usuario
         // El timepo no debe superar lo configurado en INACTIVE_TIME
-        if(isset($_SESSION['timeout'])){
+        if (isset($_SESSION['timeout'])) {
             $tiempoSesion = time() - $_SESSION['timeout'];
-            if($tiempoSesion > INACTIVE_TIME*60){
+            if ($tiempoSesion > INACTIVE_TIME * 60) {
                 // Se destruye la sesión por inactividad
                 session_destroy();
                 header("location:/login/init");
@@ -22,7 +24,15 @@ class BaseController {
         }
     }
 
-    public function render(string $view, array $arrayData = null){
+    public function render(string $view, array $arrayData = null)
+    {
+        echo "Intentando renderizar vista: $view<br>";
+
+        // Verificar que el archivo existe
+        $viewPath = MAIN_APP_ROUTE . "../views/$view";
+        if (!file_exists($viewPath)) {
+            echo "ERROR: El archivo de vista $viewPath no existe<br>";
+        }
         if (isset($arrayData) && is_array($arrayData)) {
 
             foreach ($arrayData as $key => $value) {
@@ -32,9 +42,9 @@ class BaseController {
             }
         }
 
-        $content = MAIN_APP_ROUTE."../views/$view";
-        $layout = MAIN_APP_ROUTE."../views/layouts/{$this->layout}.php";
-        include_once $layout; 
+        $content = MAIN_APP_ROUTE . "../views/$view";
+        $layout = MAIN_APP_ROUTE . "../views/layouts/{$this->layout}.php";
+        include_once $layout;
     }
     public function formartNumber()
     {
