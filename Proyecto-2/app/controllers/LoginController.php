@@ -1,0 +1,42 @@
+<?php
+namespace App\Controllers;
+use App\Controllers\BaseController;
+use App\Models\UsuarioModel;
+
+class LoginController extends BaseController{
+    public function __construct(){
+        $this->layout = "login_layout";
+    }
+
+    public function initLogin(){
+        if(isset($_POST['txtUser']) && isset($_POST['txtPassword'])){
+            $user = trim($_POST['txtUser']) ?? null;
+            $password = trim($_POST['txtPassword']) ?? null;
+                if($user != "" && $password != ""){
+                    // Se valida la existencia del usuario y constraseña en al BD
+                    $loginObj = new UsuarioModel();
+                    $resp = $loginObj->validarLogin($user, $password);
+                    if($resp){
+                        $this->redirectTo('programaFormacion/view');
+                    }else{
+                        $errors = "El usuario y/o contraseña incorrectos";
+                    }
+                } else {
+                    $errors = "El usuario y/o contraseña no pueden ser vacíos";
+                    
+                }
+                $data = [
+                    'errors' => $errors
+                ];
+                $this->render('login/login.php', $data);
+        } else {
+            $this->render('login/login.php');
+        }
+    }
+
+    public function logoutLogin(){
+        session_destroy();
+        header('Location: /login/init');
+    }
+
+}
