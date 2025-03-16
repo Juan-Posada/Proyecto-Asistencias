@@ -26,7 +26,6 @@ class BaseController
 
     public function render(string $view, array $arrayData = null)
     {
-        echo "Intentando renderizar vista: $view<br>";
 
         // Verificar que el archivo existe
         $viewPath = MAIN_APP_ROUTE . "../views/$view";

@@ -15,7 +15,7 @@
             foreach ($asistencias as $asistencia) {
                 echo
                 "<div class='record'>
-                <span>ID: $asistencia->id - Fecha: $asistencia->fecha - Aprendiz ID: $asistencia->aprendiz_id</span>
+                <span>ID: $asistencia->id - Fecha: $asistencia->fecha - Aprendiz ID: $asistencia->aprendizId</span>
                 <div class='buttons'>
                     <a href='/asistencia/view/$asistencia->id'> <button>Consultar</button> </a> 
                     <a href='/asistencia/edit/$asistencia->id'> <button>Editar</button> </a> 

@@ -26,14 +26,13 @@ class BaseModel
     public function getAll(): array
     {
         try {
-            echo "Intentando obtener datos de la tabla: $this->table<br>";
 
             $sql = "SELECT * FROM $this->table";
             $statement = $this->dbConnection->query($sql);
 
             // Verificar si hay registros
             $result = $statement->fetchAll(PDO::FETCH_OBJ);
-            echo "Se encontraron " . count($result) . " registros<br>";
+        
 
             return $result;
         } catch (PDOException $ex) {
