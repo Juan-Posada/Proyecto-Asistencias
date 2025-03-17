@@ -10,8 +10,23 @@ class Instructor extends Usuario {
 
     public static function crear($nombre, $email, $password, $regional, $centro_academico) {
         $conexion = Conexion::obtenerInstancia();
+        
+        // Hashear la contraseña antes de guardarla
+        $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+    
+        // Preparar la consulta SQL
         $stmt = $conexion->prepare("INSERT INTO usuarios (nombre, email, password, rol, regional, centro_academico, creado_por) VALUES (?, ?, ?, 'instructor', ?, ?, ?)");
-        $stmt->bind_param("sssss", $nombre, $email, $password, $regional, $centro_academico);
+        
+        // Verificar si la preparación de la consulta fue exitosa
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta: " . $conexion->error);
+        }
+    
+        // Vincular los parámetros
+        $creado_por = $_SESSION['usuario']['id']; // Obtener el ID del usuario que crea el instructor
+        $stmt->bind_param("sssssi", $nombre, $email, $passwordHash, $regional, $centro_academico, $creado_por);
+    
+        // Ejecutar la consulta
         return $stmt->execute();
     }
 
