@@ -10,7 +10,7 @@
     }
     ?>
     
-    <h2>Iniciar sesión</h2>
+    <h2>Iniciar Sesión</h2>
     <form action="/login/init" method="post">
         <div class="input-group">
             <label for="txtUser">Email</label>

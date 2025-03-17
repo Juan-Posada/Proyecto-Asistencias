@@ -11,12 +11,16 @@
                 <input type="text" readonly value="<?php echo $programa->id ?>" name="txtId" id="txtId" class="form-control">
             </div>
             <div class="form-group">
-                <label for="">Código del Programa:</label>
-                <input type="text" value="<?php echo $programa->codigo ?>" name="txtCodigo" id="txtCodigo" class="form-control">
-            </div>
-            <div class="form-group">
                 <label for="">Nombre del Programa:</label>
                 <input type="text" value="<?php echo $programa->nombre ?>" name="txtNombre" id="txtNombre" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="">Coordinador:</label>
+                <select name="txtIdCoordinador" id="txtIdCoordinador" class="form-control" required>
+                    <?php foreach ($coordinadores as $coordinador): ?>
+                        <option value="<?php echo $coordinador->id; ?>" <?php echo $programa->id_coordinador == $coordinador->id ? 'selected' : ''; ?>><?php echo $coordinador->nombre; ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
             <div class="form-group">
                 <button type="submit">Editar</button>

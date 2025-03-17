@@ -11,6 +11,30 @@
                 <input type="text" name="txtNombre" id="txtNombre" class="form-control" required>
             </div>
             <div class="form-group">
+                <label for="">Email del Usuario:</label>
+                <input type="email" name="txtEmail" id="txtEmail" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="">Contraseña:</label>
+                <input type="password" name="txtPassword" id="txtPassword" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="">Rol:</label>
+                <select name="txtRol" id="txtRol" class="form-control" required>
+                    <option value="super_admin">Super Admin</option>
+                    <option value="coordinador">Coordinador</option>
+                    <option value="instructor">Instructor</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">ID del Centro:</label>
+                <select name="txtIdCentro" id="txtIdCentro" class="form-control" required>
+                    <?php foreach ($centros as $centro): ?>
+                        <option value="<?php echo $centro->id; ?>"><?php echo $centro->nombre; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
                 <button type="submit">Guardar</button>
             </div>
         </form>

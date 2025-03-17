@@ -19,7 +19,6 @@
                 <div class='buttons'>
                     <a href='/regional/view/$regional->id'> <button>Consultar</button> </a> 
                     <a href='/regional/edit/$regional->id'> <button>Editar</button> </a> 
-                    < ```php
                     <a href='/regional/delete/$regional->id'> <button>Eliminar</button> </a> 
                 </div>
             </div>";

@@ -13,12 +13,12 @@ class ProgramaFormacionModel extends BaseModel {
         parent::__construct();
     }
 
-    public function saveProgramaFormacion($codigo, $nombre) {
+    public function saveProgramaFormacion($nombre, $id_coordinador) {
         try {
-            $sql = "INSERT INTO $this->table (codigo, nombre) VALUES (:codigo, :nombre)";
+            $sql = "INSERT INTO $this->table (nombre, id_coordinador) VALUES (:nombre, :id_coordinador)";
             $statement = $this->dbConnection->prepare($sql);
-            $statement->bindParam(':codigo', $codigo, PDO::PARAM_STR);
             $statement->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+            $statement->bindParam(':id_coordinador', $id_coordinador, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {
             echo "Error al guardar el programa de formación>" . $ex->getMessage();
@@ -37,12 +37,12 @@ class ProgramaFormacionModel extends BaseModel {
         }
     }
 
-    public function editProgramaFormacion($id, $codigo, $nombre) {
+    public function editProgramaFormacion($id, $nombre, $id_coordinador) {
         try {
-            $sql = "UPDATE $this->table SET codigo=:codigo, nombre=:nombre WHERE id=:id";
+            $sql = "UPDATE $this->table SET nombre=:nombre, id_coordinador=:id_coordinador WHERE id=:id";
             $statement = $this->dbConnection->prepare($sql);
-            $statement->bindParam(":codigo", $codigo, PDO::PARAM_STR);
             $statement->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+            $statement->bindParam(":id_coordinador", $id_coordinador, PDO::PARAM_INT);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {

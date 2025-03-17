@@ -3,79 +3,81 @@
 namespace App\Controllers;
 
 use App\Models\ProgramaFormacionModel;
+use App\Models\UsuarioModel;
 
 require_once 'baseController.php';
 require_once MAIN_APP_ROUTE . '../models/ProgramaFormacionModel.php';
 
-class ProgramaFormacionController extends BaseController
-{
-    public function __construct()
-    {
+class ProgramaFormacionController extends BaseController {
+    public function __construct() {
         $this->layout = "admin_layout";
         parent::__construct();
     }
 
-    public function view()
-    {
+    public function view() {
         $programaObj = new ProgramaFormacionModel();
-        $programas = $programaObj->getAll(); // Obtiene todos los programas
-
-        // Añadir esta línea para depurar
-        echo "<pre>";
-        print_r($programas);
-        echo "</pre>";
-
+        $programas = $programaObj->getAll();
         $data = [
             "programas" => $programas,
-            "title" => "Programas de Formación"
+            "title" => "Programas de Formación" // Corregido aquí
         ];
-        $this->render('programaFormacion/viewProgramaFormacion.php', $data); // Renderiza la vista
+        $this->render('programaFormacion/viewProgramaFormacion.php', $data);
     }
-
-    public function new()
-    {
-        $data = [
-            "title" => "Nuevo Programa de Formación"
-        ];
-        $this->render('programaFormacion/newProgramaFormacion.php', $data);
-    }
-
-    public function create()
-    {
-        if (isset($_POST['txtCodigo']) && isset($_POST['txtNombre'])) {
-            $codigo = $_POST['txtCodigo'] ?? null;
-            $nombre = $_POST['txtNombre'] ?? null;
-            $programaObj = new ProgramaFormacionModel();
-            $programaObj->saveProgramaFormacion($codigo, $nombre);
-            $this->redirectTo("programaFormacion/view");
-        }
-    }
-
-    public function edit($id)
-    {
+    public function viewOne($id) {
         $programaObj = new ProgramaFormacionModel();
         $programaInfo = $programaObj->getProgramaFormacion($id);
         $data = [
             "programa" => $programaInfo,
+            "title" => "Detalles del Programa de Formación"
+        ];
+        $this->render('programaFormacion/viewOneProgramaFormacion.php', $data);
+    }
+
+    public function new() {
+        $coordinadorObj = new UsuarioModel();
+        $coordinadores = $coordinadorObj->getAll();
+        $data = [
+            "title" => "Nuevo Programa de Formación",
+            "coordinadores" => $coordinadores
+        ];
+        $this->render('programaFormacion/newProgramaFormacion.php', $data);
+    }
+
+    public function create() {
+        if (isset($_POST['txtNombre'], $_POST['txtIdCoordinador'])) {
+            $nombre = $_POST['txtNombre'] ?? null;
+            $id_coordinador = $_POST['txtIdCoordinador'] ?? null;
+            $programaObj = new ProgramaFormacionModel();
+            $programaObj->saveProgramaFormacion($nombre, $id_coordinador);
+            $this->redirectTo("programaFormacion/view");
+        }
+    }
+
+    public function edit($id) {
+        $programaObj = new ProgramaFormacionModel();
+        $programaInfo = $programaObj->getProgramaFormacion($id);
+        $coordinadorObj = new UsuarioModel();
+        $coordinadores = $coordinadorObj->getAll();
+        $data = [
+            "programa" => $programaInfo,
+            "coordinadores" => $coordinadores,
             "title" => "Editar Programa de Formación"
         ];
         $this->render('programaFormacion/editProgramaFormacion.php', $data);
     }
 
-    public function update()
-    {
-        if (isset($_POST['txtId']) && isset($_POST['txtCodigo']) && isset($_POST['txtNombre'])) {
+    public function update() {
+        if (isset($_POST['txtId'], $_POST['txtNombre'], $_POST['txtIdCoordinador'])) {
             $id = $_POST['txtId'] ?? null;
-            $codigo = $_POST['txtCodigo'] ?? null;
             $nombre = $_POST['txtNombre'] ?? null;
+            $id_coordinador = $_POST['txtIdCoordinador'] ?? null;
             $programaObj = new ProgramaFormacionModel();
-            $programaObj->editProgramaFormacion($id, $codigo, $nombre);
+            $programaObj->editProgramaFormacion($id, $nombre, $id_coordinador);
             $this->redirectTo("programaFormacion/view");
         }
     }
 
-    public function delete($id)
-    {
+    public function delete($id) {
         $programaObj = new ProgramaFormacionModel();
         $programaInfo = $programaObj->getProgramaFormacion($id);
         $data = [
@@ -85,8 +87,7 @@ class ProgramaFormacionController extends BaseController
         $this->render('programaFormacion/deleteProgramaFormacion.php', $data);
     }
 
-    public function remove()
-    {
+    public function remove() {
         if (isset($_POST['txtId'])) {
             $id = $_POST['txtId'] ?? null;
             $programaObj = new ProgramaFormacionModel();

@@ -7,28 +7,31 @@ use PDOException;
 
 require_once MAIN_APP_ROUTE . '../models/BaseModel.php';
 
-class UsuarioModel extends BaseModel
-{
-    public function __construct()
-    {
+class UsuarioModel extends BaseModel {
+    public function __construct() {
         $this->table = "usuarios"; // Nombre de la tabla en la base de datos
         parent::__construct();
     }
 
-    public function saveUsuario($nombre)
-    {
+
+
+    public function saveUsuario($nombre, $email, $password, $rol, $id_centro) {
         try {
-            $sql = "INSERT INTO $this->table (nombre) VALUES (:nombre)";
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Hash de la contraseña
+            $sql = "INSERT INTO $this->table (nombre, email, password, rol, id_centro) VALUES (:nombre, :email, :password, :rol, :id_centro)";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+            $statement->bindParam(':email', $email, PDO::PARAM_STR);
+            $statement->bindParam(':password', $hashedPassword, PDO::PARAM_STR); // Guardar el hash
+            $statement->bindParam(':rol', $rol, PDO::PARAM_STR);
+            $statement->bindParam(':id_centro', $id_centro, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {
             echo "Error al guardar el usuario>" . $ex->getMessage();
         }
     }
 
-    public function getUsuario($id)
-    {
+    public function getUsuario($id) {
         try {
             $sql = "SELECT * FROM $this->table WHERE id=:id";
             $statement = $this->dbConnection->prepare($sql);
@@ -40,12 +43,15 @@ class UsuarioModel extends BaseModel
         }
     }
 
-    public function editUsuario($id, $nombre)
-    {
+    public function editUsuario($id, $nombre, $email, $password, $rol, $id_centro) {
         try {
-            $sql = "UPDATE $this->table SET nombre=:nombre WHERE id=:id";
+            $sql = "UPDATE $this->table SET nombre=:nombre, email=:email, password=:password, rol=:rol, id_centro=:id_centro WHERE id=:id";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+            $statement->bindParam(":email", $email, PDO::PARAM_STR);
+            $statement->bindParam(":password", $password, PDO::PARAM_STR);
+            $statement->bindParam(":rol", $rol, PDO::PARAM_STR);
+            $statement->bindParam(":id_centro", $id_centro, PDO::PARAM_INT);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {
@@ -53,8 +59,7 @@ class UsuarioModel extends BaseModel
         }
     }
 
-    public function removeUsuario($id)
-    {
+    public function removeUsuario($id) {
         try {
             $sql = "DELETE FROM $this->table WHERE id=:id";
             $statement = $this->dbConnection->prepare($sql);
@@ -65,18 +70,27 @@ class UsuarioModel extends BaseModel
             return false;
         }
     }
-    public function validarLogin($user, $password)
-    {
-        try {
-            $sql = "SELECT * FROM $this->table WHERE email = :email AND password = :password";
-            $statement = $this->dbConnection->prepare($sql);
-            $statement->bindParam(':email', $user, PDO::PARAM_STR);
-            $statement->bindParam(':password', $password, PDO::PARAM_STR);
-            $statement->execute();
-            return $statement->fetch(PDO::FETCH_OBJ) !== false; // Retorna true si el usuario existe
-        } catch (PDOException $ex) {
-            echo "Error al validar el login: " . $ex->getMessage();
-            return false;
+
+    public function validarLogin($email, $password){ // Contraseñaque llega del formulario
+        $sql = "SELECT * FROM $this->table WHERE email=:email";
+        $statement = $this->dbConnection->prepare($sql);
+        $statement->bindParam(':email', $email);
+        $statement->execute();
+        $resultSet = [];
+        while($row = $statement->fetch(PDO::FETCH_OBJ)){
+            $resultSet [] = $row;
         }
+        if(count($resultSet) > 0){
+            $hash = $resultSet[0]->password; // Hash guardado en la base de datos
+            if(password_verify($password, $hash)){
+                $_SESSION['nombre'] = $resultSet[0]->nombre;
+                $_SESSION['id'] = $resultSet[0]->id;
+                $_SESSION['rol'] = $resultSet[0]->rol;
+                $_SESSION['timeout'] = time();
+                session_regenerate_id();
+                return true;
+            }
+        }
+        return false;
     }
 }

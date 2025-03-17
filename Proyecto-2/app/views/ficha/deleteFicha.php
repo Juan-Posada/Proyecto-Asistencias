@@ -7,7 +7,7 @@
     <div class="info">
         <form action="/ficha/remove" method="post">
             <div class="form-group">
-                <label>ID de la Ficha:</label>
+                <label>Ficha:</label>
                 <input type="text" readonly value="<?php echo $ficha->id ?>" name="txtId" class="form-control">
             </div>
             <div class="form-group">

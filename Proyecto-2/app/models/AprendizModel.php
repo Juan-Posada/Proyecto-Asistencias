@@ -13,11 +13,13 @@ class AprendizModel extends BaseModel {
         parent::__construct();
     }
 
-    public function saveAprendiz($nombre) {
+    public function saveAprendiz($nombre, $email, $id_ficha) {
         try {
-            $sql = "INSERT INTO $this->table (nombre) VALUES (:nombre)";
+            $sql = "INSERT INTO $this->table (nombre, email, id_ficha) VALUES (:nombre, :email, :id_ficha)";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+            $statement->bindParam(':email', $email, PDO::PARAM_STR);
+            $statement->bindParam(':id_ficha', $id_ficha, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {
             echo "Error al guardar el aprendiz>" . $ex->getMessage();
@@ -36,11 +38,13 @@ class AprendizModel extends BaseModel {
         }
     }
 
-    public function editAprendiz($id, $nombre) {
+    public function editAprendiz($id, $nombre, $email, $id_ficha) {
         try {
-            $sql = "UPDATE $this->table SET nombre=:nombre WHERE id=:id";
+            $sql = "UPDATE $this->table SET nombre=:nombre, email=:email, id_ficha=:id_ficha WHERE id=:id";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+            $statement->bindParam(":email", $email, PDO::PARAM_STR);
+            $statement->bindParam(":id_ficha", $id_ficha, PDO::PARAM_INT);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {
@@ -59,5 +63,18 @@ class AprendizModel extends BaseModel {
             return false;
         }
     }
+    
+    // Nuevo método para obtener aprendices por ficha
+    public function getAprendicesByFicha($id_ficha) {
+        try {
+            $sql = "SELECT * FROM $this->table WHERE id_ficha=:id_ficha";
+            $statement = $this->dbConnection->prepare($sql);
+            $statement->bindParam(":id_ficha", $id_ficha, PDO::PARAM_INT);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $ex) {
+            echo "Error al obtener los aprendices por ficha>" . $ex->getMessage();
+            return [];
+        }
+    }
 }
-?>

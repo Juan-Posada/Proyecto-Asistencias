@@ -23,6 +23,16 @@ class RegionalController extends BaseController {
         $this->render('regional/viewRegional.php', $data);
     }
 
+    public function viewOne($id) {
+        $regionalObj = new RegionalModel();
+        $regionalInfo = $regionalObj->getRegional($id);
+        $data = [
+            "regional" => $regionalInfo,
+            "title" => "Detalles de la Regional"
+        ];
+        $this->render('regional/viewOneRegional.php', $data);
+    }
+
     public function new() {
         $data = [
             "title" => "Nueva Regional"
@@ -50,7 +60,7 @@ class RegionalController extends BaseController {
     }
 
     public function update() {
-        if (isset($_POST['txtId']) && isset($_POST['txtNombre'])) {
+        if (isset($_POST['txtId'], $_POST['txtNombre'])) {
             $id = $_POST['txtId'] ?? null;
             $nombre = $_POST['txtNombre'] ?? null;
             $regionalObj = new RegionalModel();

@@ -16,14 +16,41 @@
         <aside class="sidebar">
             <div class="sidebar-content">
                 <div class="logo">
-                    <img src="/img/logo_gymcpic.png" alt="logoImg">
-                    <span class="logo-text">SENA HORARIOS</span>
+                    <img src="/img/logo-sena.png" alt="logoImg">
+                    <span class="logo-text">ASISTENCIAS</span>
                 </div>
                 <nav class="menu">
                     <ul>
-                        <li><a href="><i class="fas fa-user-tag"></i><span class="span"></span></a></li>
-                        <li><a href=""><i class="fas fa-running"></i><span class="span"></span></a></li>
-                        <li><a href=""><i class="fas fa-user"></i><span class="span"></span></a></li>
+                    <?php if(isset($_SESSION['rol']) && $_SESSION['rol']=='super_admin'): ?>
+                        <li><a href="/usuario/view"><i class="fas fa-user-tag"></i><span class="span">Usuarios</span></a></li>
+                        <li><a href="/regional/view"><i class="fas fa-map-marker-alt"></i><span class="span">Regionales</span></a></li>
+                        <li><a href="/centro/view"><i class="fas fa-building"></i><span class="span">Centros</span></a></li>
+                        <li><a href="/ambiente/view"><i class="fas fa-door-open"></i><span class="span">Ambientes</span></a></li>
+                        <li><a href="/ficha/view"><i class="fas fa-file-alt"></i><span class="span">Fichas</span></a></li>
+                        <li><a href="/programaFormacion/view"><i class="fas fa-graduation-cap"></i><span class="span">Programas</span></a></li>
+                        <li><a href="/aprendiz/view"><i class="fas fa-user-graduate"></i><span class="span">Aprendices</span></a></li>
+                        <li><a href="/asistencia/view"><i class="fas fa-check-circle"></i><span class="span">Asistencias</span></a></li>
+                    <?php endif ?>
+                    <?php if(isset($_SESSION['rol']) && $_SESSION['rol']=='coordinador'): ?>
+                        <li><a href="/usuario/view"><i class="fas fa-user-tag"></i><span class="span">Usuarios</span></a></li>
+                        <li><a href="/ambiente/view"><i class="fas fa-door-open"></i><span class="span">Ambientes</span></a></li>
+                        <li><a href="/ficha/view"><i class="fas fa-file-alt"></i><span class="span">Fichas</span></a></li>
+                        <li><a href="/programaFormacion/view"><i class="fas fa-graduation-cap"></i><span class="span">Programas</span></a></li>
+                        <li><a href="/aprendiz/view"><i class="fas fa-user-graduate"></i><span class="span">Aprendices</span></a></li>
+                        <li><a href="/asistencia/view"><i class="fas fa-check-circle"></i><span class="span">Asistencias</span></a></li>
+                    <?php endif ?>
+                    <?php if(isset($_SESSION['rol']) && $_SESSION['rol']=='instructor'): ?>
+                        <li><a href="/aprendiz/view"><i class="fas fa-user-graduate"></i><span class="span">Aprendices</span></a></li>
+                        <li><a href="/asistencia/view"><i class="fas fa-check-circle"></i><span class="span">Asistencias</span></a></li>
+                    <?php endif ?>
+                    <?php if(isset($_SESSION['nombre'])){ ?>
+                            <li>
+                                <a href="/login/logout">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    <span class="span">Cerrar Sesión</span>
+                                </a>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </nav>
             </div>
@@ -33,10 +60,6 @@
                 <div class="header-container">
                     <button class="menu-toggle"><i class="fas fa-bars"></i></button>
                     <h1> <?php echo $title ?> </h1>
-                    <div class="search-container">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Buscar...">
-                    </div>
                     <div class="header-icons">
                         <a href="#" class="icon-link"><i class="fas fa-user-circle"></i></a>
                         <a href="#" class="icon-link"><i class="fas fa-bell"></i></a>

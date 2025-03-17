@@ -26,7 +26,7 @@ class LoginController extends BaseController
                 $resp = $loginObj->validarLogin($user, $password);
                 if ($resp) {
                     $_SESSION['timeout'] = time(); // Añadir esta línea
-                    $this->redirectTo('programaFormacion/view');
+                    $this->redirectTo('aprendiz/view');
                 } else {
                     $errors = "El usuario y/o contraseña incorrectos";
                 }

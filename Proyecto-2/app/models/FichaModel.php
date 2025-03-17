@@ -13,11 +13,12 @@ class FichaModel extends BaseModel {
         parent::__construct();
     }
 
-    public function saveFicha($nombre) {
+    public function saveFicha($nombre, $id_programa) {
         try {
-            $sql = "INSERT INTO $this->table (nombre) VALUES (:nombre)";
+            $sql = "INSERT INTO $this->table (nombre, id_programa) VALUES (:nombre, :id_programa)";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+            $statement->bindParam(':id_programa', $id_programa, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {
             echo "Error al guardar la ficha>" . $ex->getMessage();
@@ -36,12 +37,13 @@ class FichaModel extends BaseModel {
         }
     }
 
-    public function editFicha($id, $nombre) {
+    public function editFicha($id, $nombre, $id_programa) {
         try {
-            $sql = "UPDATE $this->table SET nombre=:nombre WHERE id=:id";
+            $sql = "UPDATE $this->table SET nombre=:nombre, id_programa=:id_programa WHERE id=:id"; // Asegúrate de que el ID esté correctamente vinculado
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":nombre", $nombre, PDO::PARAM_STR);
-            $statement->bindParam(":id", $id, PDO::PARAM_INT);
+            $statement->bindParam(":id_programa", $id_programa, PDO::PARAM_INT);
+            $statement->bindParam(":id", $id, PDO::PARAM_INT); // Asegúrate de que esta línea esté correcta
             return $statement->execute();
         } catch (PDOException $ex) {
             echo "Error al editar la ficha>" . $ex->getMessage();

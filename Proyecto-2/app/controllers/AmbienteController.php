@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\AmbienteModel;
+use App\Models\ProgramaFormacionModel;
 
 require_once 'baseController.php';
 require_once MAIN_APP_ROUTE . '../models/AmbienteModel.php';
@@ -23,18 +24,39 @@ class AmbienteController extends BaseController {
         $this->render('ambiente/viewAmbiente.php', $data);
     }
 
-    public function new() {
+    public function viewOne($id) {
+        $ambienteObj = new AmbienteModel();
+        $ambienteInfo = $ambienteObj->getAmbiente($id);
+        
+        // Obtener el nombre del programa
+        $programaObj = new ProgramaFormacionModel();
+        $programaInfo = $programaObj->getProgramaFormacion($ambienteInfo->id_programa);
+        
         $data = [
-            "title" => "Nuevo Ambiente"
+            "ambiente" => $ambienteInfo,
+            "programa" => $programaInfo->nombre, // Agregar el nombre del programa
+            "title" => "Detalles del Ambiente"
+        ];
+        $this->render('ambiente/viewOneAmbiente.php', $data);
+    }
+
+    public function new() {
+        $programaObj = new ProgramaFormacionModel();
+        $programas = $programaObj->getAll();
+        $data = [
+            "title" => "Nuevo Ambiente",
+            "programas" => $programas
         ];
         $this->render('ambiente/newAmbiente.php', $data);
     }
 
     public function create() {
-        if (isset($_POST['txtNombre'])) {
+        if (isset($_POST['txtNombre'], $_POST['txtTipo'], $_POST['txtIdPrograma'])) {
             $nombre = $_POST['txtNombre'] ?? null;
+            $tipo = $_POST['txtTipo'] ?? null;
+            $id_programa = $_POST['txtIdPrograma'] ?? null;
             $ambienteObj = new AmbienteModel();
-            $ambienteObj->saveAmbiente($nombre);
+            $ambienteObj->saveAmbiente($nombre, $tipo, $id_programa);
             $this->redirectTo("ambiente/view");
         }
     }
@@ -42,19 +64,24 @@ class AmbienteController extends BaseController {
     public function edit($id) {
         $ambienteObj = new AmbienteModel();
         $ambienteInfo = $ambienteObj->getAmbiente($id);
+        $programaObj = new ProgramaFormacionModel();
+        $programas = $programaObj->getAll();
         $data = [
             "ambiente" => $ambienteInfo,
+            "programas" => $programas,
             "title" => "Editar Ambiente"
         ];
         $this->render('ambiente/editAmbiente.php', $data);
     }
 
     public function update() {
-        if (isset($_POST['txtId']) && isset($_POST['txtNombre'])) {
+        if (isset($_POST['txtId'], $_POST['txtNombre'], $_POST['txtTipo'], $_POST['txtIdPrograma'])) {
             $id = $_POST['txtId'] ?? null;
             $nombre = $_POST['txtNombre'] ?? null;
+            $tipo = $_POST['txtTipo'] ?? null;
+            $id_programa = $_POST['txtIdPrograma'] ?? null;
             $ambienteObj = new AmbienteModel();
-            $ambienteObj->editAmbiente($id, $nombre);
+            $ambienteObj->editAmbiente($id, $nombre, $tipo, $id_programa);
             $this->redirectTo("ambiente/view");
         }
     }

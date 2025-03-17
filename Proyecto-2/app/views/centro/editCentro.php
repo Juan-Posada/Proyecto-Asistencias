@@ -15,6 +15,14 @@
                 <input type="text" value="<?php echo $centro->nombre ?>" name="txtNombre" id="txtNombre" class="form-control">
             </div>
             <div class="form-group">
+                <label for="">ID de la Regional:</label>
+                <select name="txtIdRegional" id="txtIdRegional" class="form-control" required>
+                    <?php foreach ($regionales as $regional): ?>
+                        <option value="<?php echo $regional->id; ?>" <?php echo $centro->id_regional == $regional->id ? 'selected' : ''; ?>><?php echo $regional->nombre; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
                 <button type="submit">Editar</button>
             </div>
         </form>

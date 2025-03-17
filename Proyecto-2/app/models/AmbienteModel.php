@@ -13,11 +13,13 @@ class AmbienteModel extends BaseModel {
         parent::__construct();
     }
 
-    public function saveAmbiente($nombre) {
+    public function saveAmbiente($nombre, $tipo, $id_programa) {
         try {
-            $sql = "INSERT INTO $this->table (nombre) VALUES (:nombre)";
+            $sql = "INSERT INTO $this->table (nombre, tipo, id_programa) VALUES (:nombre, :tipo, :id_programa)";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+            $statement->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+            $statement->bindParam(':id_programa', $id_programa, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {
             echo "Error al guardar el ambiente>" . $ex->getMessage();
@@ -36,11 +38,13 @@ class AmbienteModel extends BaseModel {
         }
     }
 
-    public function editAmbiente($id, $nombre) {
+    public function editAmbiente($id, $nombre, $tipo, $id_programa) {
         try {
-            $sql = "UPDATE $this->table SET nombre=:nombre WHERE id=:id";
+            $sql = "UPDATE $this->table SET nombre=:nombre, tipo=:tipo, id_programa=:id_programa WHERE id=:id";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+            $statement->bindParam(":tipo", $tipo, PDO::PARAM_STR);
+            $statement->bindParam(":id_programa", $id_programa, PDO::PARAM_INT);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {

@@ -13,11 +13,12 @@ class CentroModel extends BaseModel {
         parent::__construct();
     }
 
-    public function saveCentro($nombre) {
+    public function saveCentro($nombre, $id_regional) {
         try {
-            $sql = "INSERT INTO $this->table (nombre) VALUES (:nombre)";
+            $sql = "INSERT INTO $this->table (nombre, id_regional) VALUES (:nombre, :id_regional)";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+            $statement->bindParam(':id_regional', $id_regional, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {
             echo "Error al guardar el centro>" . $ex->getMessage();
@@ -36,11 +37,12 @@ class CentroModel extends BaseModel {
         }
     }
 
-    public function editCentro($id, $nombre) {
+    public function editCentro($id, $nombre, $id_regional) {
         try {
-            $sql = "UPDATE $this->table SET nombre=:nombre WHERE id=:id";
+            $sql = "UPDATE $this->table SET nombre=:nombre, id_regional=:id_regional WHERE id=:id";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+            $statement->bindParam(":id_regional", $id_regional, PDO::PARAM_INT);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {
