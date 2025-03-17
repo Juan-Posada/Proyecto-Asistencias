@@ -7,6 +7,7 @@
     <title> <?php echo $title ?> </title>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/style_admin_layout.css">
+    <link rel="shortcut icon" href="/img/logo-sena.png" type="image/x-icon">
     <!-- Añadiendo Font Awesome para los iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>

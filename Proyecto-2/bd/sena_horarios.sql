@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-03-2025 a las 16:28:54
+-- Tiempo de generación: 17-03-2025 a las 04:58:35
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 
 --
 -- Base de datos: `sena_horarios`
-CREATE DATABASE IF NOT EXISTS sena_horarios;
-USE sena_horarios;
 --
 
 -- --------------------------------------------------------
@@ -42,7 +40,8 @@ CREATE TABLE `ambientes` (
 
 INSERT INTO `ambientes` (`id`, `nombre`, `tipo`, `id_programa`) VALUES
 (1, 'Aula 101', 'aula', 1),
-(2, 'Taller de Hardware', 'taller', 2);
+(2, 'Taller de Hardware', 'taller', 2),
+(3, 'Sistemas 2', 'aula', 2);
 
 -- --------------------------------------------------------
 
@@ -86,12 +85,12 @@ CREATE TABLE `asistencias` (
 INSERT INTO `asistencias` (`id`, `id_aprendiz`, `fecha`, `estado`) VALUES
 (1, 1, '2023-10-01', 'presente'),
 (2, 1, '2023-10-02', 'ausente'),
-(3, 1, '2023-10-03', ''),
 (4, 2, '2023-10-01', 'presente'),
 (5, 2, '2023-10-02', 'presente'),
 (6, 3, '2023-10-01', 'ausente'),
 (7, 3, '2023-10-02', 'ausente'),
-(8, 3, '2023-10-03', 'presente');
+(8, 3, '2023-10-03', 'presente'),
+(9, 3, '2025-03-16', 'presente');
 
 -- --------------------------------------------------------
 
@@ -111,7 +110,8 @@ CREATE TABLE `centros` (
 
 INSERT INTO `centros` (`id`, `nombre`, `id_regional`) VALUES
 (1, 'Centro de Formación Norte', 1),
-(2, 'Centro de Formación Sur', 2);
+(2, 'Centro de Formación Sur', 2),
+(3, 'CPIC', 4);
 
 -- --------------------------------------------------------
 
@@ -171,7 +171,8 @@ CREATE TABLE `programas` (
 
 INSERT INTO `programas` (`id`, `nombre`, `id_coordinador`) VALUES
 (1, 'Programación Web', 2),
-(2, 'Mantenimiento de Sistemas', 2);
+(2, 'Mantenimiento de Sistemas', 2),
+(3, 'ADSO', 1);
 
 -- --------------------------------------------------------
 
@@ -190,7 +191,8 @@ CREATE TABLE `regionales` (
 
 INSERT INTO `regionales` (`id`, `nombre`) VALUES
 (1, 'Regional Norte'),
-(2, 'Regional Sur');
+(2, 'Regional Sur'),
+(4, 'Caldas');
 
 -- --------------------------------------------------------
 
@@ -214,7 +216,10 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `id_centro`) VALUES
 (1, 'Juan Pérez', 'juan.perez@sena.edu.co', '123', 'super_admin', 1),
 (2, 'María Gómez', 'maria.gomez@sena.edu.co', '123', 'coordinador', 1),
-(3, 'Carlos Ruiz', 'carlos.ruiz@sena.edu.co', '123', 'instructor', 1);
+(3, 'Carlos Ruiz', 'carlos.ruiz@sena.edu.co', '123', 'instructor', 1),
+(5, 'Juan ', 'juan@example.com', '$2y$10$p5MPYWBTRUBfpy2zVVBwN.akXweMdkHhV1e1QqCiKSz0zuris12g.', 'super_admin', 1),
+(6, 'daniel', 'daniel@example.com', '$2y$10$A07aH7w/3GVyBPzE78mToOLap.D3dYIRe0/XvzdVI2GPtXQIB0W.i', 'coordinador', 1),
+(7, 'jeferson', 'jeferson@example.com', '$2y$10$W7JkJcWj3KwBXAn7Dc4QPeI.CYh06djoFy1dLgSnx7sn/mioHtu7y', 'instructor', 1);
 
 --
 -- Índices para tablas volcadas
@@ -293,7 +298,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `ambientes`
 --
 ALTER TABLE `ambientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `aprendices`
@@ -305,19 +310,19 @@ ALTER TABLE `aprendices`
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `fichas`
 --
 ALTER TABLE `fichas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `instructores_fichas`
@@ -329,19 +334,19 @@ ALTER TABLE `instructores_fichas`
 -- AUTO_INCREMENT de la tabla `programas`
 --
 ALTER TABLE `programas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `regionales`
 --
 ALTER TABLE `regionales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas

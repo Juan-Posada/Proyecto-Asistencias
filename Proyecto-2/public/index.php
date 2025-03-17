@@ -32,3 +32,5 @@ if($matchedRoute){
         exit;
     }
 }
+
+header('Location: /login/init');
