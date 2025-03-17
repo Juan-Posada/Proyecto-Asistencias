@@ -21,9 +21,14 @@
             <div class="form-group">
                 <label for="">Rol:</label>
                 <select name="txtRol" id="txtRol" class="form-control" required>
+                <?php if(isset($_SESSION['rol']) && $_SESSION['rol']=='super_admin'): ?>
                     <option value="super_admin">Super Admin</option>
                     <option value="coordinador">Coordinador</option>
                     <option value="instructor">Instructor</option>
+                <?php endif ?>
+                <?php if(isset($_SESSION['rol']) && $_SESSION['rol']=='coordinador'): ?>
+                    <option value="instructor">Instructor</option>
+                <?php endif ?>
                 </select>
             </div>
             <div class="form-group">

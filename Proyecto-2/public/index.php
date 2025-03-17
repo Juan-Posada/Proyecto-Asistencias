@@ -9,6 +9,7 @@ require_once '../app/controllers/FichaController.php';
 require_once '../app/controllers/ProgramaFormacionController.php'; 
 require_once '../app/controllers/RegionalController.php'; 
 require_once '../app/controllers/UsuarioController.php'; 
+require_once '../app/controllers/MainController.php'; 
 
 
 $url = $_SERVER['REQUEST_URI']; //Lo que se ingresa en la URL

@@ -7,7 +7,7 @@
     width: 250px;
     background-color: #2f855a; /* Verde oscuro */
     color: white;
-    height: 100vh;
+    height: 165vh;
     transition: all 0.3s ease;
     overflow-y: auto;
     overflow-x: hidden;
@@ -533,4 +533,208 @@ body.dark-mode .excel-row {
 
 body.dark-mode .excel-cell {
     color: #e0e0e0;
+}
+
+/* Estilos para el contenedor de filtros */
+.filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    border-bottom: 1px solid #a5bed8;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+/* Estilos para los selects e inputs de filtro */
+.filter-container select,
+.filter-container input {
+    height: 36px;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 0 10px;
+    background-color: #f8f9fa;
+    font-size: 14px;
+    color: #333;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.filter-container select {
+    min-width: 150px;
+    cursor: pointer;
+}
+
+.filter-container input[type="date"] {
+    min-width: 160px;
+}
+
+.filter-container select:focus,
+.filter-container input:focus {
+    border-color: #2f855a;
+    box-shadow: 0 0 0 2px rgba(47, 133, 90, 0.2);
+    outline: none;
+}
+
+/* Estilos para el modo oscuro */
+body.dark-mode .filter-container {
+    background-color: #1e1e1e;
+    border-color: #2d482e;
+}
+
+body.dark-mode .filter-container select,
+body.dark-mode .filter-container input {
+    background-color: #2d482e;
+    color: #e0e0e0;
+    border-color: #2d482e;
+}
+
+body.dark-mode .filter-container select:focus,
+body.dark-mode .filter-container input:focus {
+    border-color: #2d8a5b;
+    box-shadow: 0 0 0 2px rgba(47, 133, 90, 0.2);
+}
+
+/* Mensaje de no resultados */
+#sin-resultados {
+    text-align: center;
+    padding: 20px;
+    color: #718096;
+    font-style: italic;
+}
+
+body.dark-mode #sin-resultados {
+    color: #a0aec0;
+}
+
+/* Estilos mejorados para la sección de enlaces en la página de bienvenida */
+.container-links {
+    margin-top: 30px;
+    width: 100%;
+}
+
+.container-links ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.container-links li {
+    width: 100%;
+    transition: transform 0.2s ease;
+}
+
+.container-links li:hover {
+    transform: translateX(5px);
+}
+
+.container-links a {
+    text-decoration: none;
+    color: #2f855a;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 15px 20px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.container-links a:hover {
+    color: #fff;
+    background-color: #2f855a;
+    border-left: 4px solid #1a4731;
+    box-shadow: 0 4px 10px rgba(47, 133, 90, 0.2);
+}
+
+.container-links a i {
+    font-size: 1.3rem;
+    margin-right: 15px;
+    min-width: 25px;
+    text-align: center;
+}
+
+.container-links a span.span {
+    font-size: 1.1rem;
+}
+
+/* Modificación de contenedor de datos para mejor presentación */
+.data-container {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    max-width: 800px;
+    margin: 30px auto;
+    overflow: hidden;
+}
+
+.navegate-group {
+    height: auto;
+    padding: 25px;
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.navegate-group h2 {
+    color: #2f855a;
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+div.info {
+    max-height: none;
+    padding: 25px;
+}
+
+/* Estilos para el modo oscuro */
+body.dark-mode .container-links a {
+    background-color: #2d3748;
+    color: #68d391;
+}
+
+body.dark-mode .container-links a:hover {
+    background-color: #2f855a;
+    color: #fff;
+    border-left: 4px solid #9ae6b4;
+}
+
+body.dark-mode .data-container {
+    background-color: #1a202c;
+    border-color: #2d3748;
+}
+
+body.dark-mode .navegate-group {
+    background-color: #2d3748;
+    border-color: #4a5568;
+}
+
+body.dark-mode .navegate-group h2 {
+    color: #9ae6b4;
+}
+
+.status-select {
+    width: 150px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.status-select.updating {
+    opacity: 0.6;
+}
+
+.status-select.success {
+    background-color: #e6ffe6;
+    border-color: #4CAF50;
 }

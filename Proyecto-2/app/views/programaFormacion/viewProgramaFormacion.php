@@ -1,7 +1,7 @@
 <div class="data-container">
     <div class="navegate-group">
         <div class="back">
-            <a href="/login/init"><img src="/img/back.svg"></a>
+        <a href="/main"><img src="/img/back.svg"></a>
         </div>
         <div class="create">
             <a href="/programaFormacion/new"><button>+</button></a>

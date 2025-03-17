@@ -13,13 +13,14 @@ class AsistenciaModel extends BaseModel {
         parent::__construct();
     }
 
-    public function saveAsistencia($id_aprendiz, $fecha, $estado) {
+    public function saveAsistencia($id_aprendiz, $fecha, $estado, $id_ficha) {
         try {
-            $sql = "INSERT INTO $this->table (id_aprendiz, fecha, estado) VALUES (:id_aprendiz, :fecha, :estado)";
+            $sql = "INSERT INTO $this->table (id_aprendiz, fecha, estado, id_ficha) VALUES (:id_aprendiz, :fecha, :estado, :id_ficha)";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(':id_aprendiz', $id_aprendiz, PDO::PARAM_INT);
             $statement->bindParam(':fecha', $fecha, PDO::PARAM_STR);
             $statement->bindParam(':estado', $estado, PDO::PARAM_STR);
+            $statement->bindParam(':id_ficha', $id_ficha, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {
             echo "Error al guardar la asistencia>" . $ex->getMessage();
@@ -38,13 +39,14 @@ class AsistenciaModel extends BaseModel {
         }
     }
 
-    public function editAsistencia($id, $id_aprendiz, $fecha, $estado) {
+    public function editAsistencia($id, $id_aprendiz, $fecha, $estado, $id_ficha) {
         try {
-            $sql = "UPDATE $this->table SET id_aprendiz=:id_aprendiz, fecha=:fecha, estado=:estado WHERE id=:id";
+            $sql = "UPDATE $this->table SET id_aprendiz=:id_aprendiz, fecha=:fecha, estado=:estado, id_ficha=:id_ficha WHERE id=:id";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":id_aprendiz", $id_aprendiz, PDO::PARAM_INT);
             $statement->bindParam(":fecha", $fecha, PDO::PARAM_STR);
             $statement->bindParam(":estado", $estado, PDO::PARAM_STR);
+            $statement->bindParam(":id_ficha", $id_ficha, PDO::PARAM_INT);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {
@@ -93,5 +95,7 @@ class AsistenciaModel extends BaseModel {
             echo "Error al obtener las asistencias por aprendices>" . $ex->getMessage();
             return [];
         }
+   
     }
+
 }

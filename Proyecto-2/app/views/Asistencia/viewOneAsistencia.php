@@ -10,10 +10,10 @@
             echo "
                 <div class='record-one'>
                     <span>ID: $asistencia->id</span>
-                    <span>ID Aprendiz: $asistencia->id_aprendiz</span>
-                    <span>Nombre Aprendiz: $aprendiz</span> <!-- Mostrar el nombre del aprendiz -->
+                    <span>Nombre Aprendiz: $aprendiz</span>
                     <span>Fecha: $asistencia->fecha</span>
                     <span>Estado: $asistencia->estado</span>
+                    <span>Ficha: $ficha</span> <!-- Mostrar el nombre de la ficha -->
                 </div>
             ";      
         }

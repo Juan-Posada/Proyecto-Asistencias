@@ -23,7 +23,7 @@ class UsuarioController extends BaseController {
                     $loginObj = new UsuarioModel();
                     $resp = $loginObj->validarLogin($user, $password);
                     if($resp){
-                        $this->redirectTo('programaFormacion/view');
+                        $this->redirectTo('/main');
                     }else{
                         $errors = "El usuario y/o contraseña incorrectos";
                     }

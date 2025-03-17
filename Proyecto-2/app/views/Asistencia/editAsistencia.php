@@ -27,6 +27,15 @@
                 <select name="txtEstado" id="txtEstado" class="form-control" required>
                     <option value="presente" <?php echo $asistencia->estado == 'presente' ? 'selected' : ''; ?>>Presente</option>
                     <option value="ausente" <?php echo $asistencia->estado == 'ausente' ? 'selected' : ''; ?>>Ausente</option>
+                    <option value="excusa" <?php echo $asistencia->estado == 'ausente' ? 'selected' : ''; ?>>Excusa</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Ficha:</label>
+                <select name="txtIdFicha" id="txtIdFicha" class="form-control" required>
+                    <?php foreach ($fichas as $ficha): ?>
+                        <option value="<?php echo $ficha->id; ?>" <?php echo $asistencia->id_ficha == $ficha->id ? 'selected' : ''; ?>><?php echo $ficha->nombre; ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div class="form-group">

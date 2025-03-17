@@ -286,4 +286,9 @@ return [
         'controller' => 'AsistenciaController',
         'action' => 'getAsistenciasByFicha'
     ],
+    // Página Principal
+    "/main" => [
+        "controller" => "App\Controllers\MainController",
+        "action" => "view"
+    ],
 ];

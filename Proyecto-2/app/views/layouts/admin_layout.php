@@ -22,6 +22,7 @@
                 </div>
                 <nav class="menu">
                     <ul>
+                    <li><a href="/main"><i class="fas fa-home"></i><span class="span">INICIO</span></a></li>
                     <?php if(isset($_SESSION['rol']) && $_SESSION['rol']=='super_admin'): ?>
                         <li><a href="/usuario/view"><i class="fas fa-user-tag"></i><span class="span">Usuarios</span></a></li>
                         <li><a href="/regional/view"><i class="fas fa-map-marker-alt"></i><span class="span">Regionales</span></a></li>
