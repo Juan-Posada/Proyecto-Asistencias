@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-03-2025 a las 04:58:35
+-- Tiempo de generación: 25-03-2025 a las 17:48:58
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -41,7 +41,8 @@ CREATE TABLE `ambientes` (
 INSERT INTO `ambientes` (`id`, `nombre`, `tipo`, `id_programa`) VALUES
 (1, 'Aula 101', 'aula', 1),
 (2, 'Taller de Hardware', 'taller', 2),
-(3, 'Sistemas 2', 'aula', 2);
+(3, 'Sistemas 2', 'aula', 2),
+(4, 'Sistemas 2', 'aula', 4);
 
 -- --------------------------------------------------------
 
@@ -63,7 +64,9 @@ CREATE TABLE `aprendices` (
 INSERT INTO `aprendices` (`id`, `nombre`, `email`, `id_ficha`) VALUES
 (1, 'Andrés Torres', 'andres.torres@sena.edu.co', 1),
 (2, 'Laura Martínez', 'laura.martinez@sena.edu.co', 1),
-(3, 'Pedro Sánchez', 'pedro.sanchez@sena.edu.co', 2);
+(3, 'Pedro Sánchez', 'pedro.sanchez@sena.edu.co', 2),
+(4, 'angies', 'angie@example.com', 4),
+(5, 'Sebastian', 'sebastian@example.com', 2);
 
 -- --------------------------------------------------------
 
@@ -75,22 +78,23 @@ CREATE TABLE `asistencias` (
   `id` int(11) NOT NULL,
   `id_aprendiz` int(11) DEFAULT NULL,
   `fecha` date NOT NULL,
-  `estado` enum('presente','ausente') NOT NULL
+  `estado` enum('presente','ausente','excusa') NOT NULL,
+  `id_ficha` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `asistencias`
 --
 
-INSERT INTO `asistencias` (`id`, `id_aprendiz`, `fecha`, `estado`) VALUES
-(1, 1, '2023-10-01', 'presente'),
-(2, 1, '2023-10-02', 'ausente'),
-(4, 2, '2023-10-01', 'presente'),
-(5, 2, '2023-10-02', 'presente'),
-(6, 3, '2023-10-01', 'ausente'),
-(7, 3, '2023-10-02', 'ausente'),
-(8, 3, '2023-10-03', 'presente'),
-(9, 3, '2025-03-16', 'presente');
+INSERT INTO `asistencias` (`id`, `id_aprendiz`, `fecha`, `estado`, `id_ficha`) VALUES
+(12, 4, '2025-03-17', 'excusa', 4),
+(13, 4, '2025-03-16', 'presente', 4),
+(14, 3, '2025-03-17', 'presente', 2),
+(15, 2, '2025-03-16', 'ausente', 1),
+(16, 1, '2025-03-17', 'presente', 1),
+(17, 1, '2025-03-15', 'ausente', 1),
+(19, 2, '2025-03-11', 'excusa', 1),
+(20, 4, '2025-03-17', 'excusa', 4);
 
 -- --------------------------------------------------------
 
@@ -111,7 +115,8 @@ CREATE TABLE `centros` (
 INSERT INTO `centros` (`id`, `nombre`, `id_regional`) VALUES
 (1, 'Centro de Formación Norte', 1),
 (2, 'Centro de Formación Sur', 2),
-(3, 'CPIC', 4);
+(3, 'CPIC', 4),
+(4, 'Minero Ambiental', 5);
 
 -- --------------------------------------------------------
 
@@ -130,8 +135,9 @@ CREATE TABLE `fichas` (
 --
 
 INSERT INTO `fichas` (`id`, `nombre`, `id_programa`) VALUES
-(1, 'Ficha 2023-01', 1),
-(2, 'Ficha 2023-02', 2);
+(1, '2789154', 1),
+(2, '2900754', 2),
+(4, '2873711', 3);
 
 -- --------------------------------------------------------
 
@@ -172,7 +178,8 @@ CREATE TABLE `programas` (
 INSERT INTO `programas` (`id`, `nombre`, `id_coordinador`) VALUES
 (1, 'Programación Web', 2),
 (2, 'Mantenimiento de Sistemas', 2),
-(3, 'ADSO', 1);
+(3, 'ADSO', 1),
+(4, 'ADSO ', 3);
 
 -- --------------------------------------------------------
 
@@ -192,7 +199,8 @@ CREATE TABLE `regionales` (
 INSERT INTO `regionales` (`id`, `nombre`) VALUES
 (1, 'Regional Norte'),
 (2, 'Regional Sur'),
-(4, 'Caldas');
+(4, 'Caldas'),
+(5, 'El Bagre');
 
 -- --------------------------------------------------------
 
@@ -245,7 +253,8 @@ ALTER TABLE `aprendices`
 --
 ALTER TABLE `asistencias`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_aprendiz` (`id_aprendiz`);
+  ADD KEY `id_aprendiz` (`id_aprendiz`),
+  ADD KEY `asistencias_ibfk_2` (`id_ficha`);
 
 --
 -- Indices de la tabla `centros`
@@ -298,31 +307,31 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `ambientes`
 --
 ALTER TABLE `ambientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `aprendices`
 --
 ALTER TABLE `aprendices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `fichas`
 --
 ALTER TABLE `fichas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `instructores_fichas`
@@ -334,13 +343,13 @@ ALTER TABLE `instructores_fichas`
 -- AUTO_INCREMENT de la tabla `programas`
 --
 ALTER TABLE `programas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `regionales`
 --
 ALTER TABLE `regionales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -368,7 +377,8 @@ ALTER TABLE `aprendices`
 -- Filtros para la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  ADD CONSTRAINT `asistencias_ibfk_1` FOREIGN KEY (`id_aprendiz`) REFERENCES `aprendices` (`id`);
+  ADD CONSTRAINT `asistencias_ibfk_1` FOREIGN KEY (`id_aprendiz`) REFERENCES `aprendices` (`id`),
+  ADD CONSTRAINT `asistencias_ibfk_2` FOREIGN KEY (`id_ficha`) REFERENCES `fichas` (`id`);
 
 --
 -- Filtros para la tabla `centros`
